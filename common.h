@@ -1,14 +1,18 @@
 #ifndef __COMMON_H__
 #define __COMMON_H__
 #include "MC96FD316.h"
-typedef signed char	INTS8;
-typedef signed short	INTS16;
-typedef signed long	INTS32;
+typedef signed char	INT8S;
+typedef signed short	INT16S;
+typedef signed long	INT32S;
 
-typedef unsigned char	INTU8;
-typedef unsigned short	INTU16;
-typedef unsigned long	INTU32;
+typedef unsigned char	INT8U;
+typedef unsigned short	INT16U;
+typedef unsigned long	INT32U;
 
+
+#define uint8_t	unsigned char
+#define uint16_t	unsigned short
+#define uint32_t	unsigned long
 
 /* Duty configuration */
 #define DPWM_TIMER_FREQ     (20)         /* PWM timer frequency[MHz] */
@@ -34,5 +38,15 @@ typedef unsigned long	INTU32;
 #define EI()                        EA = 1
 
 
+
+void pwm_set_duty(INT16U duty);
 void system_init(void);
+void UARTPuts( const void *str);
+void UARTPutDec16(uint16_t decnum);
+void UARTPutDec32(uint32_t decnum);
+
+
+#define DBG(x)	UARTPuts(x)
+#define DBD16(x) UARTPutDec16(x)
+#define DBD32(x) UARTPutDec32(x)
 #endif

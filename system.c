@@ -22,42 +22,32 @@ void	lvr_init(void)
 void	port_init(void)
 {	
 	// Port 0
-	P0FSR = 0x00;		// GPIO
-	P0    = 0x00;		// All off	
-	P0IO  = 0x3F;		// All output
+	P0FSR = 0x0F;		// P00 P01 P02 P03 as pwm out
+ 	P0    = 0x00;		// All off	
+	P0IO  = 0xF;		// All output
 	P0PU  = 0x00;		// No pull-up
 	P0OD  = 0x00;		// All Push-pull
 	
 	// Port 1
-	P1FSRH = 0x55;		// P17=CMP3+,P16=OPOUT,P15=OP-,P14=OP+
-	P1FSRL = 0x08;			// P13:CMP012-, P[2:0]:gpio 	
+	P1FSRL = 0x0B;		// P10 P11 P13 as CMP
+	P1FSRH = 0x82;		// P17 as AN3 P15 as IO P14 as An0
 	P1   = 0x00;
-	P1IO = 0x00;				// All input 
+	P1IO = 0x20; 
 	P1PU = 0x07;
 	
 	// Port 2
-	P2FSRH = 0x01;		// P27,P26,P25=GPIO,P24=Vbus AN8
-	P2FSRL = 0x85;		// P23=AN7,P22=CMD input,P21=CMP1OUT,P20=CMP2OUT
+	P2FSRH = 0x0C;		//
+	P2FSRL = 0x20;		//
 	P2   = 0x00;
 	P2IO = 0x00;
 	P2PU = 0x00;
 	P2OD = 0x00;
-
-	// Port 3
-	P3FSR = (0<<4)|		// 0/1: P34/SCK
-			(0<<3)|		// 0/1: P33/"RXD/SCL/MISO"
-			(0<<2)|		// 0/1: P32/"TXD/SDA/MOSI"
-			(0<<1)|		// 0/1: P31/XOUT
-			(0<<0);		// 0/1: P30/XIN
-	P3IO = 0x31;
-	P3PU = 0x00;
-	P3OD = 0x00;
-	P3   = 0x31;
+	
 }
 
 void	clock_init(void)
 {	
-	OSCCR = (5<<3)|	// IRC frequency selection
+	OSCCR = (5<<3)|	// IRC frequency selection   20MHz
 			(0<<2)|				// IRCE(0/1): Enable/Disable IRC
 			(0<<1);				// XCLKE(0/1): Disable/Enable X-tal
 }
@@ -74,7 +64,7 @@ void	tick_init(void)
 */
 
 void	adc_init(void)
-{
+{	
 	//ADC Conversion time = 4.5us with 23 clocks at >4.0V
 	ADCCRH = 0x02;		//20MHz/4, MSB align
 	ADCCRL = 0x87;
@@ -85,8 +75,13 @@ void	adc_init(void)
 
 void uart_init()
 {
-	USICR1 = 0x06;
+	P3FSR |= ((1<<3)|(1<<2));
 	
+	USIBD=126;   // baud 9600
+	
+	USICR1 = 0x06;   // 异步UART ，无奇偶 ，8位
+	USICR2 = (1<<3)|(1<<1);   //  使能USI 模块、发送
+	 
 }
 
 void pwm_init()
@@ -97,6 +92,7 @@ void pwm_init()
 
 	T1CRL = 0xD6;
 	T1CRH = 0x10;
+
 
 	//pwm out
 	T3CRH = (0<<7)		// T3 disable
@@ -109,27 +105,41 @@ void pwm_init()
 		|(1<<1)				// Delay Time Insertion - disable
 		|(1<<0);			// Delay Time Insertion Position
 
-	T3PDR = (INTU16)(DCARRIER_SET);
-
-	T3OUTCRH= 0x80;		//A=L-Start,B=H-Start, B=Output Disable, A=Output Enable; // H-side PWM, L-side GPIO
+	T3PDR = (INT16U)(DCARRIER_SET);
+	pwm_set_duty(0);
+	
+	T3OUTCRH= (1<<7)|(1<<5)|(1<<4)|(1<<2)|(1<<1);		//A=L-Start,B=H-Start, B=Output Disable, A=Output Enable; // H-side PWM, L-side GPIO
 	T3OUTCRL= 0x00;			//When disabled, output 'L'
-	P0FSR = 0x3f;				// set pwm out	
 
 	T3DLY = 60;		//Dead-time = 3us (60@20MHz)
 	
 	T3INTCR = 0x00;		//No Interrupt
 	T3IFR   = 0x00;		//Interrupt all cleared
 	T3ADTCR = 0x00;
+
+	T3CRH |= 0x80;	// start PWM timer 	
 }
 
+void tick_init()
+{
+	T2ADR = 389;   // 10ms
 
+	T2CRL = 0x00;  // 20Mhz/512     0.0256ms
+	T2CRH = (1<<7) | (1<<0);  // 使能
+}
 void int_init()
 {
 	EIPOL1 = 0x01;  // EINT11 rising edge 
 	IE1 |= (1<<5);  //  enable EINT11
-	IE2 |= (1<<2); // enable timer1 match
+	IE2 |= ((1<<3)|(1<<2)); // enable timer1/2 match
+	IE3 |= (1<<1);   // cmp 012
 }
 
+void cmp_init()
+{
+	CMPPOL = 0x05;
+	CMPCR = 0x30;
+}
 void system_init()
 {
 	wdt_init();
@@ -139,9 +149,13 @@ void system_init()
 	pwm_init();
 	uart_init();
 	int_init();
+	tick_init();
+
+	cmp_init();
+	adc_init();
 	
 //	fault_init();			
-//	tick_init();
+
 //interrupt_init();
 //adc_init();
 	

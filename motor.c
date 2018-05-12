@@ -1,18 +1,20 @@
 #include "common.h"
 
 
-INTU8 gValidDetectFlag = 0;
-INTU16 gDetectHighCnt = 0;
-INTU16 gDetectLowCnt = 0;
+volatile INT8U gValidDetectFlag = 0;
+volatile INT32U gDetectHighCnt = 0;
+volatile INT32U gDetectLowCnt = 0;
+volatile INT32U gTempCnt = 0;
+volatile INT8U gDetectOverflowCnt = 0;
 
-
-void pwm_set_duty(INTU16 duty)
+void pwm_set_duty(INT16U duty)
 {
-	INTU16	duty16;
+	INT16U	duty16;
+
+	duty16 = ((DCARRIER_SET + 1) / 100) * duty;
 	
-	duty16   = DCARRIER_SET-duty;
+	duty16   = DCARRIER_SET-duty16-1;
 	
 	T3ADR = duty16;
 	T3BDR = duty16;
-	T3CDR = duty16;
 }
