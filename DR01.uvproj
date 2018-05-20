@@ -371,6 +371,16 @@
               <FileType>1</FileType>
               <FilePath>.\motor.c</FilePath>
             </File>
+            <File>
+              <FileName>hal_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\hal_uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>hal_adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\hal_adc.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

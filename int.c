@@ -6,7 +6,6 @@ extern volatile INT32U gDetectLowCnt;
 extern INT8U overflow;
 extern volatile  INT8U gDetectOverflowCnt;
 extern volatile INT32U gTempCnt;
-extern INT8U dbgCnt;
 void	EINT11_IRQHandler(void)	interrupt 11	using 1 
 {
 	// clear flag
@@ -16,22 +15,26 @@ void	EINT11_IRQHandler(void)	interrupt 11	using 1
 	switch(gValidDetectFlag)
 	{
 		case 0:
-				gValidDetectFlag++;
+				EIPOL1 &= ~(0x03);
+				EIPOL1 |= 0x01;
+				gValidDetectFlag = VALID_DETECT_FLAG_WAIT_RISE;
 				break;
-		case 1:	
-				gValidDetectFlag++;
-				gDetectLowCnt = (INT32U)(T1BDR) + gTempCnt;
+		case VALID_DETECT_FLAG_WAIT_RISE:	
+				gValidDetectFlag = VALID_DETECT_FLAG_WAIT_FALL;
+				gDetectHighCnt = (INT32U)(T1BDR) + gTempCnt;
 				EIPOL1 &= ~(0x03);
 				EIPOL1 |= 0x02;
 				break;
-		case 2:
-				gDetectHighCnt = (INT32U)(T1BDR)+gTempCnt;
+		case VALID_DETECT_FLAG_WAIT_FALL:
+				gDetectLowCnt = (INT32U)(T1BDR)+gTempCnt;
 				EIPOL1 &= ~(0x03);
 				EIPOL1 |= 0x01;
-				gValidDetectFlag = 1;
+				gValidDetectFlag = VALID_DETECT_FLAG_WAIT_RISE;
 				break;
 		default:
-			gValidDetectFlag = 0;
+			EIPOL1 &= ~(0x03);
+			EIPOL1 |= 0x01;
+			gValidDetectFlag = VALID_DETECT_FLAG_INIT;
 			break;
 	}
 	gDetectOverflowCnt = 0;
@@ -46,13 +49,19 @@ void TIMER1_IRQHandler(void) interrupt 14 using 1
 
 	gTempCnt+=65535;
 
-	if(gDetectOverflowCnt++ > 80)
+	if((gDetectOverflowCnt++ > 80) && (gValidDetectFlag != VALID_DETECT_FLAG_INIT))
 	{
-		gDetectOverflowCnt = 0;
-		gValidDetectFlag = 0;
 		gDetectHighCnt = 0;
 		gDetectLowCnt = 0;
+		gDetectOverflowCnt = 0;
 		gTempCnt = 0;
+
+		if(gValidDetectFlag == VALID_DETECT_FLAG_WAIT_RISE)
+		{
+			gDetectHighCnt = 1;   // duty is 100%
+		}
+		
+		gValidDetectFlag = VALID_DETECT_FLAG_INIT;
 	}
 }
 
@@ -65,6 +74,5 @@ void TIMER2_IRQHandler(void) interrupt 15 using 1
 
 void CMP012_IRQHandler(void) interrupt 19 using 1
 {	
-	dbgCnt++;
 	CMPFLAG = 0;
 }

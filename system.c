@@ -66,7 +66,7 @@ void	tick_init(void)
 void	adc_init(void)
 {	
 	//ADC Conversion time = 4.5us with 23 clocks at >4.0V
-	ADCCRH = 0x02;		//20MHz/4, MSB align
+	ADCCRH = 0x07;		//20MHz/4, LSB align
 	ADCCRL = 0x87;
 
 	ADCCRL = 0xC7;		//dummy start
@@ -101,14 +101,14 @@ void pwm_init()
 		|(0<<1)				// 0: interval, 2: B2B
 		|(1<<0);			// counter clear 
 	T3CRL = (1<<6)		// period match
-		|(0<<2)				// Period Match Interrupt Occurrence Selection
+		|(0<<2)// Period Match Interrupt Occurrence Selection
 		|(1<<1)				// Delay Time Insertion - disable
 		|(1<<0);			// Delay Time Insertion Position
-
+	
 	T3PDR = (INT16U)(DCARRIER_SET);
 	pwm_set_duty(0);
 	
-	T3OUTCRH= (1<<7)|(1<<5)|(1<<4)|(1<<2)|(1<<1);		//A=L-Start,B=H-Start, B=Output Disable, A=Output Enable; // H-side PWM, L-side GPIO
+	T3OUTCRH= (1<<7)|(1<<6)|(1<<5)|(1<<4)|(1<<2)|(1<<1);		//A=H-Start,B=H-Start, B=Output Disable, A=Output Enable; // H-side PWM, L-side GPIO
 	T3OUTCRL= 0x00;			//When disabled, output 'L'
 
 	T3DLY = 60;		//Dead-time = 3us (60@20MHz)
@@ -129,7 +129,7 @@ void tick_init()
 }
 void int_init()
 {
-	EIPOL1 = 0x01;  // EINT11 rising edge 
+	EIPOL1 = 0x02;  // EINT11 falling edge 
 	IE1 |= (1<<5);  //  enable EINT11
 	IE2 |= ((1<<3)|(1<<2)); // enable timer1/2 match
 	IE3 |= (1<<1);   // cmp 012
@@ -144,7 +144,8 @@ void system_init()
 {
 	wdt_init();
 	lvr_init();
-	port_init();	
+	port_init();
+	adc_init();
 	clock_init(); 
 	pwm_init();
 	uart_init();
@@ -157,7 +158,6 @@ void system_init()
 //	fault_init();			
 
 //interrupt_init();
-//adc_init();
 	
 //	runIndicator(OFF);                                         
 	//errIndicator(OFF);    

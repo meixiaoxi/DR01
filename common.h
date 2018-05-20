@@ -37,14 +37,25 @@ typedef unsigned long	INT32U;
 #define DI()                        EA = 0
 #define EI()                        EA = 1
 
+#define VALID_DETECT_FLAG_INIT	0
+#define VALID_DETECT_FLAG_WAIT_FALL	1
+#define VALID_DETECT_FLAG_WAIT_RISE	2
 
 
+#define ADC_CH_VBUS			0	
+#define ADC_CH_V_VICE_MOTOR	3
+#define ADC_CH_TEMP			5
+#define ADC_CH_V_MAIN_MOTOR	6
+#define ADC_CH_VICE_CURR_DET	9
+#define ADC_CH_MAIN_CURR_DET	10
 void pwm_set_duty(INT16U duty);
 void system_init(void);
 void UARTPuts( const void *str);
 void UARTPutDec16(uint16_t decnum);
 void UARTPutDec32(uint32_t decnum);
-
+uint16_t get_adc(uint8_t ad_ch);
+void samplePwmInhandle();
+void pwmOutputHandle();
 
 #define DBG(x)	UARTPuts(x)
 #define DBD16(x) UARTPutDec16(x)

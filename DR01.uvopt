@@ -71,7 +71,7 @@
         <LExpSel>0</LExpSel>
       </OPTXL>
       <OPTFL>
-        <tvExp>0</tvExp>
+        <tvExp>1</tvExp>
         <tvExpOptDlg>0</tvExpOptDlg>
         <IsCurrentTarget>1</IsCurrentTarget>
       </OPTFL>
@@ -190,8 +190,8 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>1</TopLine>
-      <CurrentLine>8</CurrentLine>
+      <TopLine>49</TopLine>
+      <CurrentLine>60</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\main.c</PathWithFileName>
       <FilenameWithoutPath>main.c</FilenameWithoutPath>
@@ -202,10 +202,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>11</ColumnNumber>
+      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>17</TopLine>
-      <CurrentLine>27</CurrentLine>
+      <TopLine>111</TopLine>
+      <CurrentLine>117</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\system.c</PathWithFileName>
       <FilenameWithoutPath>system.c</FilenameWithoutPath>
@@ -218,8 +218,8 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>1</TopLine>
-      <CurrentLine>2</CurrentLine>
+      <TopLine>16</TopLine>
+      <CurrentLine>22</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\int.c</PathWithFileName>
       <FilenameWithoutPath>int.c</FilenameWithoutPath>
@@ -233,16 +233,44 @@
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
       <TopLine>1</TopLine>
-      <CurrentLine>18</CurrentLine>
+      <CurrentLine>12</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\motor.c</PathWithFileName>
       <FilenameWithoutPath>motor.c</FilenameWithoutPath>
+    </File>
+    <File>
+      <GroupNumber>1</GroupNumber>
+      <FileNumber>6</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <Focus>0</Focus>
+      <ColumnNumber>0</ColumnNumber>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <TopLine>35</TopLine>
+      <CurrentLine>48</CurrentLine>
+      <bDave2>0</bDave2>
+      <PathWithFileName>.\hal_uart.c</PathWithFileName>
+      <FilenameWithoutPath>hal_uart.c</FilenameWithoutPath>
+    </File>
+    <File>
+      <GroupNumber>1</GroupNumber>
+      <FileNumber>7</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <Focus>0</Focus>
+      <ColumnNumber>0</ColumnNumber>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <TopLine>0</TopLine>
+      <CurrentLine>0</CurrentLine>
+      <bDave2>0</bDave2>
+      <PathWithFileName>.\hal_adc.c</PathWithFileName>
+      <FilenameWithoutPath>hal_adc.c</FilenameWithoutPath>
     </File>
   </Group>
 
   <AlienFiles>
     <PathWithFilename>F:\work\motor\src\dr01\COMMON.H</PathWithFilename>
-    <TopLine>19</TopLine>
+    <TopLine>20</TopLine>
     <CurrentLine>37</CurrentLine>
     <Constant>0</Constant>
     <WindowPosition>
@@ -1612,38 +1640,44 @@
         <Doc>
           <Name>.\main.c</Name>
           <ColumnNumber>0</ColumnNumber>
-          <TopLine>1</TopLine>
-          <CurrentLine>8</CurrentLine>
+          <TopLine>49</TopLine>
+          <CurrentLine>60</CurrentLine>
         </Doc>
         <Doc>
           <Name>COMMON.H</Name>
-          <ColumnNumber>23</ColumnNumber>
-          <TopLine>19</TopLine>
+          <ColumnNumber>0</ColumnNumber>
+          <TopLine>20</TopLine>
           <CurrentLine>37</CurrentLine>
         </Doc>
         <Doc>
           <Name>.\system.c</Name>
-          <ColumnNumber>11</ColumnNumber>
-          <TopLine>17</TopLine>
-          <CurrentLine>27</CurrentLine>
+          <ColumnNumber>0</ColumnNumber>
+          <TopLine>111</TopLine>
+          <CurrentLine>117</CurrentLine>
         </Doc>
         <Doc>
           <Name>.\int.c</Name>
           <ColumnNumber>0</ColumnNumber>
-          <TopLine>1</TopLine>
-          <CurrentLine>2</CurrentLine>
+          <TopLine>16</TopLine>
+          <CurrentLine>22</CurrentLine>
         </Doc>
         <Doc>
           <Name>.\motor.c</Name>
           <ColumnNumber>0</ColumnNumber>
           <TopLine>1</TopLine>
-          <CurrentLine>18</CurrentLine>
+          <CurrentLine>12</CurrentLine>
         </Doc>
         <Doc>
           <Name>.\STARTUP.A51</Name>
           <ColumnNumber>0</ColumnNumber>
           <TopLine>196</TopLine>
           <CurrentLine>196</CurrentLine>
+        </Doc>
+        <Doc>
+          <Name>.\hal_uart.c</Name>
+          <ColumnNumber>0</ColumnNumber>
+          <TopLine>35</TopLine>
+          <CurrentLine>48</CurrentLine>
         </Doc>
       </Documents>
     </MDIGroup>
