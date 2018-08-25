@@ -14,6 +14,16 @@ typedef unsigned long	INT32U;
 #define uint16_t	unsigned short
 #define uint32_t	unsigned long
 
+
+typedef struct sysADC{
+	INT16U tempAdc;
+	INT16U vbusAdc;
+	INT16U mainMotorAdc;
+	INT16U viceMotorAdc;
+	INT16U mainCurrAdc;
+	INT16U viceCurrAdc;
+}SYSADC;
+
 /* Duty configuration */
 #define DPWM_TIMER_FREQ     (20)         /* PWM timer frequency[MHz] */
 #define DCARRIER_FREQ       (20)         /* carrier wave frequency[kHz] */
@@ -48,6 +58,27 @@ typedef unsigned long	INT32U;
 #define ADC_CH_V_MAIN_MOTOR	6
 #define ADC_CH_VICE_CURR_DET	9
 #define ADC_CH_MAIN_CURR_DET	10
+
+#define SYS_RUN_MODE_STOP					0
+#define SYS_RUN_MODE_STARTING				1
+#define SYS_RUN_MODE_NORMAL				2
+#define SYS_RUN_MODE_IN_CURR_PROTCET		3
+#define SYS_RUN_MODE_IN_TEMP_PROTECT 	4
+#define SYS_RUN_MODE_EMERGENCY_STOP		5
+#define SYS_RUN_MODE_DEAD_END			6
+
+#define SYS_PROTECT_FLAG_NORMAL	0
+#define SYS_PROTECT_FLAG_CURRENT	0x01
+#define SYS_PROTECT_FLAG_TEMP		0x02
+#define SYS_PROTECT_FLAG_VBUS_UNDERVOLTTAGE	0x04
+
+//adc
+#define ADC_TEMP_103	274
+#define ADC_TEMP_95	307
+
+#define SET_OCP_TO_START_STATE() 	P15 = 0
+#define SET_OCP_TO_NORMAL_STATE()	P15 = 1
+
 void pwm_set_duty(INT16U duty);
 void system_init(void);
 void UARTPuts( const void *str);
@@ -56,7 +87,10 @@ void UARTPutDec32(uint32_t decnum);
 uint16_t get_adc(uint8_t ad_ch);
 void samplePwmInhandle();
 void pwmOutputHandle();
-
+void adcSampleHandle();
+void sysProtectHandle();
+void sysStatusHandle();
+void dbgHandle();
 #define DBG(x)	UARTPuts(x)
 #define DBD16(x) UARTPutDec16(x)
 #define DBD32(x) UARTPutDec32(x)

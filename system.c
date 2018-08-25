@@ -137,6 +137,7 @@ void int_init()
 
 void cmp_init()
 {
+	CMPNFCR = 0x33;
 	CMPPOL = 0x05;
 	CMPCR = 0x30;
 }

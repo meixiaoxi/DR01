@@ -11,7 +11,6 @@ INT16U tick=0;
 {
 	T1CRH |=((1<<7)|(1<<0)); 
 }
-
 void main()
 {
 	DI();		
@@ -29,8 +28,13 @@ void main()
 		overflow = 0;	
 
 		samplePwmInhandle();
+		adcSampleHandle();
+		sysProtectHandle();
+		sysStatusHandle();
 		pwmOutputHandle();
 
+		//dbgHandle();
+		
 		while(overflow==0){}   //10ms
 
 	}while(1);

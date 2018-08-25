@@ -6,6 +6,8 @@ extern volatile INT32U gDetectLowCnt;
 extern INT8U overflow;
 extern volatile  INT8U gDetectOverflowCnt;
 extern volatile INT32U gTempCnt;
+extern volatile INT8U gSysProtectCount;
+extern volatile INT8U gSysProtectStatus;
 void	EINT11_IRQHandler(void)	interrupt 11	using 1 
 {
 	// clear flag
@@ -75,4 +77,15 @@ void TIMER2_IRQHandler(void) interrupt 15 using 1
 void CMP012_IRQHandler(void) interrupt 19 using 1
 {	
 	CMPFLAG = 0;
+	gSysProtectCount = 0;
+	if(gSysProtectStatus & SYS_PROTECT_FLAG_CURRENT)
+	{
+		gSysProtectStatus  &= ~(SYS_PROTECT_FLAG_CURRENT);
+		CMPPOL = 0x05;
+	}
+	else
+	{
+		gSysProtectStatus  |= (SYS_PROTECT_FLAG_CURRENT);
+		CMPPOL = 0x0A;
+	}
 }
