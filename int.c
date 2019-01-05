@@ -51,14 +51,16 @@ void TIMER1_IRQHandler(void) interrupt 14 using 1
 
 	gTempCnt+=65535;
 
-	if((gDetectOverflowCnt++ > 80) && (gValidDetectFlag != VALID_DETECT_FLAG_INIT))
+	//if((gDetectOverflowCnt++ > 80) && (gValidDetectFlag != VALID_DETECT_FLAG_INIT))
+	if(gDetectOverflowCnt++ > 80) 
 	{
 		gDetectHighCnt = 0;
 		gDetectLowCnt = 0;
 		gDetectOverflowCnt = 0;
 		gTempCnt = 0;
-
-		if(gValidDetectFlag == VALID_DETECT_FLAG_WAIT_RISE)
+		
+		//if(gValidDetectFlag == VALID_DETECT_FLAG_WAIT_RISE)
+		if(P24 == 1)
 		{
 			gDetectHighCnt = 1;   // duty is 100%
 		}

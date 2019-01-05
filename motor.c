@@ -238,7 +238,7 @@ void sysProtectHandle()
 	//if(gSysAdc.vbusAdc > 512 || gSysAdc.vbusAdc < 307)
 	if(gSysAdc.vbusAdc > 512)
 	{
-		gSysRunMode = SYS_RUN_MODE_EMERGENCY_STOP;
+	//	gSysRunMode = SYS_RUN_MODE_EMERGENCY_STOP;
 		resultDuty = 0;
 	}
 	else if(gSysAdc.vbusAdc < 307)

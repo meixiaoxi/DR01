@@ -286,9 +286,9 @@
   </Group>
 
   <AlienFiles>
-    <PathWithFilename>D:\software\motor\src\dr01\COMMON.H</PathWithFilename>
-    <TopLine>66</TopLine>
-    <CurrentLine>84</CurrentLine>
+    <PathWithFilename>D:\software\motor\src\dr01\MC96FD316.H</PathWithFilename>
+    <TopLine>1</TopLine>
+    <CurrentLine>1</CurrentLine>
     <Constant>0</Constant>
     <WindowPosition>
       <length>0</length>
@@ -312,9 +312,9 @@
   </AlienFiles>
 
   <AlienFiles>
-    <PathWithFilename>D:\software\motor\src\dr01\MC96FD316.H</PathWithFilename>
-    <TopLine>1</TopLine>
-    <CurrentLine>1</CurrentLine>
+    <PathWithFilename>D:\software\motor\src\dr01\COMMON.H</PathWithFilename>
+    <TopLine>79</TopLine>
+    <CurrentLine>89</CurrentLine>
     <Constant>0</Constant>
     <WindowPosition>
       <length>0</length>
@@ -1694,9 +1694,9 @@
         </Doc>
         <Doc>
           <Name>COMMON.H</Name>
-          <ColumnNumber>14</ColumnNumber>
-          <TopLine>66</TopLine>
-          <CurrentLine>84</CurrentLine>
+          <ColumnNumber>33</ColumnNumber>
+          <TopLine>79</TopLine>
+          <CurrentLine>89</CurrentLine>
         </Doc>
         <Doc>
           <Name>.\system.c</Name>
